@@ -20,11 +20,77 @@
 #include "ns3/tcp-socket.h"
 #include "ns3/inet-socket-address.h"
 #include "ns3/netanim-module.h"
+#include <iomanip>
 
 using namespace ns3;
 using namespace std;
 
 NS_LOG_COMPONENT_DEFINE("MANET");
+
+void InforWifiStandard()
+{
+    std::string WS[8] = {"WIFI STANDARD 80211ac : 1", 
+                            "WIFI_STANDARD_80211ad : 2",
+                            "WIFI_STANDARD_80211ax : 3",    
+                            "WIFI_STANDARD_80211b  : 4",
+                            "WIFI_STANDARD_80211be : 5",
+                            "WIFI_STANDARD_80211g  : 6", 
+                            "WIFI STANDARD 80211n  : 7", 
+                            "WIFI_STANDARD_80211p  : 8" 
+                            };
+    for (int i=0;i<8;i++)
+    {
+        std::cout<<WS[i]<<endl;
+    }
+}
+
+void InforMode()
+{
+    int ws = 20;
+    int dm = 40;
+    int cm = 40;
+    // In tiêu đề bảng với dấu "|" giữa các cột
+    std::cout << std::left << std::setw(ws) << "Wi-Fi Standard" 
+              << " | " << std::setw(dm) << "DataMode" 
+              << " | " << std::setw(cm) << "ControlMode" << std::endl;
+    
+    // In dòng phân cách
+    std::cout << "-----------------------------------------------------------------------------------------------" << std::endl;
+
+    // In thông tin các chuẩn Wi-Fi
+    std::cout << std::left << std::setw(ws) << "802.11ac (Wi-Fi 5)" 
+              << " | " << std::setw(dm) << "VhtMcs0, VhtMcs1, ..., VhtMcs9" 
+              << " | " << std::setw(cm) << "VhtMcs0, VhtMcs1, ..., VhtMcs9" << std::endl;
+
+    std::cout << std::left << std::setw(ws) << "802.11ad (WiGig)" 
+              << " | " << std::setw(dm) << "VhtMcs0, VhtMcs1, ..., VhtMcs9" 
+              << " | " << std::setw(cm) << "VhtMcs0, VhtMcs1, ..., VhtMcs9" << std::endl;
+
+    std::cout << std::left << std::setw(ws) << "802.11ax (Wi-Fi 6)" 
+              << " | " << std::setw(dm) << "HtMcs0, HtMcs1, ..., HtMcs9, VhtMcs9" 
+              << " | " << std::setw(cm) << "HtMcs0, HtMcs1, ..., HtMcs9" << std::endl;
+
+    std::cout << std::left << std::setw(ws) << "802.11b (Wi-Fi 1)" 
+              << " | " << std::setw(dm) << "DsssRate1Mbps, DsssRate2Mbps" 
+              << " | " << std::setw(cm) << "DsssRate1Mbps, DsssRate2Mbps" << std::endl;
+
+    std::cout << std::left << std::setw(ws) << "802.11be (Wi-Fi 7)" 
+              << " | " << std::setw(dm) << "EhtMcs0, EhtMcs1, ..., EhtMcs11" 
+              << " | " << std::setw(cm) << "EhtMcs0, EhtMcs1, ..., EhtMcs11" << std::endl;
+
+    std::cout << std::left << std::setw(ws) << "802.11g (Wi-Fi 3)" 
+              << " | " << std::setw(dm) << "OfdmRate6Mbps, OfdmRate9Mbps" 
+              << " | " << std::setw(cm) << "OfdmRate6Mbps, OfdmRate9Mbps" << std::endl;
+
+    std::cout << std::left << std::setw(ws) << "802.11n (Wi-Fi 4)" 
+              << " | " << std::setw(dm) << "HtMcs0, HtMcs1, ..., HtMcs15" 
+              << " | " << std::setw(cm) << "HtMcs0, HtMcs1, ..., HtMcs15" << std::endl;
+
+    std::cout << std::left << std::setw(ws) << "802.11p (V2X)" 
+              << " | " << std::setw(dm) << "OfdmRate6Mbps, OfdmRate9Mbps" 
+              << " | " << std::setw(cm) << "OfdmRate6Mbps, OfdmRate9Mbps" << std::endl;
+
+}
 
 class manetNetwork {
 public:
@@ -83,8 +149,8 @@ public:
 
         ObjectFactory pos;
         pos.SetTypeId("ns3::RandomRectanglePositionAllocator");
-        pos.Set("X", StringValue("ns3::UniformRandomVariable[Min=0.0|Max=300.0]"));
-        pos.Set("Y", StringValue("ns3::UniformRandomVariable[Min=0.0|Max=1500.0]"));
+        pos.Set("X", StringValue("ns3::UniformRandomVariable[Min=0.0|Max=200.0]"));
+        pos.Set("Y", StringValue("ns3::UniformRandomVariable[Min=0.0|Max=200.0]"));
 
         Ptr<PositionAllocator> taPositionAlloc = pos.Create()->GetObject<PositionAllocator>();
         streamIndex += taPositionAlloc->AssignStreams(streamIndex);
@@ -112,11 +178,52 @@ public:
         }
 
         // Create wireless network
+        InforWifiStandard();
+        std::cout << "Enter the Wifi Standard: ";
+        int wS;
+        std::cin >> wS;
         WifiHelper wifi;
-        wifi.SetStandard(WIFI_STANDARD_80211b);
+        switch (wS)
+        {
+            case 1:
+                wifi.SetStandard(WIFI_STANDARD_80211ac);
+                break;
+            case 2:
+                wifi.SetStandard(WIFI_STANDARD_80211ad);
+                break;
+            case 3:
+                wifi.SetStandard(WIFI_STANDARD_80211ax);
+                break;
+            case 4:
+                wifi.SetStandard(WIFI_STANDARD_80211b);
+                break;
+            case 5:
+                wifi.SetStandard(WIFI_STANDARD_80211be);
+                break;
+            case 6:
+                wifi.SetStandard(WIFI_STANDARD_80211g);
+                break;
+            case 7:
+                wifi.SetStandard(WIFI_STANDARD_80211n);
+                break;
+            case 8:
+                wifi.SetStandard(WIFI_STANDARD_80211p);
+                break;                 
+            default:
+                cout<<"Wifi Standard isn't valid!"<<endl;
+                exit(1);
+                break;    
+        }
+        InforMode();
+        std::string DataMode = "OfdmRate6Mbps";
+        std::string ControlMode = "OfdmRate6Mbps";
+        cout<<"Enter DataMode: ";
+        cin>>DataMode;
+        cout<<"Enter ControlMode: ";
+        cin>>ControlMode;
         wifi.SetRemoteStationManager("ns3::ConstantRateWifiManager",
-                                     "DataMode", StringValue("DsssRate1Mbps"),
-                                     "ControlMode", StringValue("DsssRate1Mbps"));
+                                     "DataMode", StringValue(DataMode),
+                                     "ControlMode", StringValue(ControlMode));
         YansWifiPhyHelper wifiPhy;
         YansWifiChannelHelper wChannel = YansWifiChannelHelper::Default();
         wifiPhy.SetChannel(wChannel.Create());
@@ -166,7 +273,7 @@ public:
         serverApp.Stop(Seconds(simulationTime));
 
         // Continuously sending packets from each node to a random node until simulation time is reached
-        uint64_t packetCount = 500;
+        uint64_t packetCount = 50;
         double packetInterval = 0.001; // seconds
         double delay = 0; // seconds
         double delayInterval = 2.5; // seconds
@@ -206,7 +313,7 @@ public:
 
         // Run simulation
         // Update simulation duration
-        Simulator::Stop(Seconds(simulationTime));
+        Simulator::Stop(Seconds(simulationTime+10));
         Simulator::Run();
         Simulator::Destroy();
 
