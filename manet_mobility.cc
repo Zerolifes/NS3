@@ -27,26 +27,9 @@ using namespace std;
 
 NS_LOG_COMPONENT_DEFINE("MANET");
 
-void InforWifiStandard()
-{
-    std::string WS[8] = {"WIFI STANDARD 80211ac : 1", 
-                            "WIFI_STANDARD_80211ad : 2",
-                            "WIFI_STANDARD_80211ax : 3",    
-                            "WIFI_STANDARD_80211b  : 4",
-                            "WIFI_STANDARD_80211be : 5",
-                            "WIFI_STANDARD_80211g  : 6", 
-                            "WIFI STANDARD 80211n  : 7", 
-                            "WIFI_STANDARD_80211p  : 8" 
-                            };
-    for (int i=0;i<8;i++)
-    {
-        std::cout<<WS[i]<<endl;
-    }
-}
-
 void InforMode()
 {
-    int ws = 20;
+    int ws = 22;
     int dm = 40;
     int cm = 40;
     // In tiêu đề bảng với dấu "|" giữa các cột
@@ -55,38 +38,38 @@ void InforMode()
               << " | " << std::setw(cm) << "ControlMode" << std::endl;
     
     // In dòng phân cách
-    std::cout << "-----------------------------------------------------------------------------------------------" << std::endl;
+    std::cout << "-------------------------------------------------------------------------------------------------" << std::endl;
 
     // In thông tin các chuẩn Wi-Fi
-    std::cout << std::left << std::setw(ws) << "802.11ac (Wi-Fi 5)" 
+    std::cout << std::left << std::setw(ws) << "802.11ac (Wi-Fi 5)  1" 
               << " | " << std::setw(dm) << "VhtMcs0, VhtMcs1, ..., VhtMcs9" 
               << " | " << std::setw(cm) << "VhtMcs0, VhtMcs1, ..., VhtMcs9" << std::endl;
 
-    std::cout << std::left << std::setw(ws) << "802.11ad (WiGig)" 
+    std::cout << std::left << std::setw(ws) << "802.11ad (WiGig)    2" 
               << " | " << std::setw(dm) << "VhtMcs0, VhtMcs1, ..., VhtMcs9" 
               << " | " << std::setw(cm) << "VhtMcs0, VhtMcs1, ..., VhtMcs9" << std::endl;
 
-    std::cout << std::left << std::setw(ws) << "802.11ax (Wi-Fi 6)" 
+    std::cout << std::left << std::setw(ws) << "802.11ax (Wi-Fi 6)  3" 
               << " | " << std::setw(dm) << "HtMcs0, HtMcs1, ..., HtMcs9, VhtMcs9" 
               << " | " << std::setw(cm) << "HtMcs0, HtMcs1, ..., HtMcs9" << std::endl;
 
-    std::cout << std::left << std::setw(ws) << "802.11b (Wi-Fi 1)" 
+    std::cout << std::left << std::setw(ws) << "802.11b (Wi-Fi 1)   4" 
               << " | " << std::setw(dm) << "DsssRate1Mbps, DsssRate2Mbps" 
               << " | " << std::setw(cm) << "DsssRate1Mbps, DsssRate2Mbps" << std::endl;
 
-    std::cout << std::left << std::setw(ws) << "802.11be (Wi-Fi 7)" 
+    std::cout << std::left << std::setw(ws) << "802.11be (Wi-Fi 7)  5" 
               << " | " << std::setw(dm) << "EhtMcs0, EhtMcs1, ..., EhtMcs11" 
               << " | " << std::setw(cm) << "EhtMcs0, EhtMcs1, ..., EhtMcs11" << std::endl;
 
-    std::cout << std::left << std::setw(ws) << "802.11g (Wi-Fi 3)" 
+    std::cout << std::left << std::setw(ws) << "802.11g (Wi-Fi 3)   6" 
               << " | " << std::setw(dm) << "OfdmRate6Mbps, OfdmRate9Mbps" 
               << " | " << std::setw(cm) << "OfdmRate6Mbps, OfdmRate9Mbps" << std::endl;
 
-    std::cout << std::left << std::setw(ws) << "802.11n (Wi-Fi 4)" 
+    std::cout << std::left << std::setw(ws) << "802.11n (Wi-Fi 4)   7" 
               << " | " << std::setw(dm) << "HtMcs0, HtMcs1, ..., HtMcs15" 
               << " | " << std::setw(cm) << "HtMcs0, HtMcs1, ..., HtMcs15" << std::endl;
 
-    std::cout << std::left << std::setw(ws) << "802.11p (V2X)" 
+    std::cout << std::left << std::setw(ws) << "802.11p (V2X)       8" 
               << " | " << std::setw(dm) << "OfdmRate6Mbps, OfdmRate9Mbps" 
               << " | " << std::setw(cm) << "OfdmRate6Mbps, OfdmRate9Mbps" << std::endl;
 
@@ -120,7 +103,6 @@ public:
         double simulationTime = 500;
         uint32_t processedFlows = 0;
         uint32_t numNodes = 0;
-        uint64_t maxTrace = 50000;
         Time::SetResolution(Time::NS);
 
         // Step 1 - Creation of Nodes
@@ -178,8 +160,8 @@ public:
         }
 
         // Create wireless network
-        InforWifiStandard();
-        std::cout << "Enter the Wifi Standard: ";
+        InforMode();
+        std::cout << "Enter the Wifi Standard (1,2, ..., 8): ";
         int wS;
         std::cin >> wS;
         WifiHelper wifi;
@@ -214,7 +196,6 @@ public:
                 exit(1);
                 break;    
         }
-        InforMode();
         std::string DataMode = "OfdmRate6Mbps";
         std::string ControlMode = "OfdmRate6Mbps";
         cout<<"Enter DataMode: ";
@@ -303,9 +284,9 @@ public:
         Ptr<FlowMonitor> monitor;
         monitor = flow.InstallAll();
 
-        // Animation
+        Animation
         AnimationInterface anim("manet.xml");
-        anim.SetMaxPktsPerTraceFile(maxTrace);
+        anim.SetMaxPktsPerTraceFile(50000);
         anim.EnablePacketMetadata();
         anim.EnableIpv4RouteTracking("manet_routing.xml", Seconds(0), Seconds(20), Seconds(1));
         anim.EnableWifiMacCounters(Seconds(0), Seconds(20));
