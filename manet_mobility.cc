@@ -27,52 +27,156 @@ using namespace std;
 
 NS_LOG_COMPONENT_DEFINE("MANET");
 
+struct swifi
+{
+    string name;
+    vector<string> mode;
+    swifi(string name = "")
+    {
+        this->name = name;
+    }
+};
+swifi swmode[10];
 void InforMode()
 {
-    int ws = 22;
-    int dm = 40;
-    int cm = 40;
-    // In tiêu đề bảng với dấu "|" giữa các cột
-    std::cout << std::left << std::setw(ws) << "Wi-Fi Standard" 
-              << " | " << std::setw(dm) << "DataMode" 
-              << " | " << std::setw(cm) << "ControlMode" << std::endl;
-    
-    // In dòng phân cách
-    std::cout << "-------------------------------------------------------------------------------------------------" << std::endl;
-
-    // In thông tin các chuẩn Wi-Fi
-    std::cout << std::left << std::setw(ws) << "802.11ac (Wi-Fi 5)  1" 
-              << " | " << std::setw(dm) << "VhtMcs0, VhtMcs1, ..., VhtMcs9" 
-              << " | " << std::setw(cm) << "VhtMcs0, VhtMcs1, ..., VhtMcs9" << std::endl;
-
-    std::cout << std::left << std::setw(ws) << "802.11ad (WiGig)    2" 
-              << " | " << std::setw(dm) << "VhtMcs0, VhtMcs1, ..., VhtMcs9" 
-              << " | " << std::setw(cm) << "VhtMcs0, VhtMcs1, ..., VhtMcs9" << std::endl;
-
-    std::cout << std::left << std::setw(ws) << "802.11ax (Wi-Fi 6)  3" 
-              << " | " << std::setw(dm) << "HtMcs0, HtMcs1, ..., HtMcs9, VhtMcs9" 
-              << " | " << std::setw(cm) << "HtMcs0, HtMcs1, ..., HtMcs9" << std::endl;
-
-    std::cout << std::left << std::setw(ws) << "802.11b (Wi-Fi 1)   4" 
-              << " | " << std::setw(dm) << "DsssRate1Mbps, DsssRate2Mbps" 
-              << " | " << std::setw(cm) << "DsssRate1Mbps, DsssRate2Mbps" << std::endl;
-
-    std::cout << std::left << std::setw(ws) << "802.11be (Wi-Fi 7)  5" 
-              << " | " << std::setw(dm) << "EhtMcs0, EhtMcs1, ..., EhtMcs11" 
-              << " | " << std::setw(cm) << "EhtMcs0, EhtMcs1, ..., EhtMcs11" << std::endl;
-
-    std::cout << std::left << std::setw(ws) << "802.11g (Wi-Fi 3)   6" 
-              << " | " << std::setw(dm) << "OfdmRate6Mbps, OfdmRate9Mbps" 
-              << " | " << std::setw(cm) << "OfdmRate6Mbps, OfdmRate9Mbps" << std::endl;
-
-    std::cout << std::left << std::setw(ws) << "802.11n (Wi-Fi 4)   7" 
-              << " | " << std::setw(dm) << "HtMcs0, HtMcs1, ..., HtMcs15" 
-              << " | " << std::setw(cm) << "HtMcs0, HtMcs1, ..., HtMcs15" << std::endl;
-
-    std::cout << std::left << std::setw(ws) << "802.11p (V2X)       8" 
-              << " | " << std::setw(dm) << "OfdmRate6Mbps, OfdmRate9Mbps" 
-              << " | " << std::setw(cm) << "OfdmRate6Mbps, OfdmRate9Mbps" << std::endl;
-
+    swmode[0] = swifi("802.11p (V2X)");
+    swmode[0].mode = {  
+                        "OfdmRate1_5MbpsBW5MHz",
+                        "OfdmRate2_25MbpsBW5MHz",
+                        "OfdmRate3MbpsBW5MHz",
+                        "OfdmRate4_5MbpsBW5MHz",
+                        "OfdmRate6MbpsBW5MHz",
+                        "OfdmRate9MbpsBW5MHz",
+                        "OfdmRate12MbpsBW5MHz",
+                        "OfdmRate13_5MbpsBW5MHz",
+                        "OfdmRate3MbpsBW10MHz",
+                        "OfdmRate4_5MbpsBW10MHz",
+                        "OfdmRate6MbpsBW10MHz",
+                        "OfdmRate9MbpsBW10MHz",
+                        "OfdmRate12MbpsBW10MHz",
+                        "OfdmRate18MbpsBW10MHz",
+                        "OfdmRate24MbpsBW10MHz",
+                        "OfdmRate27MbpsBW10MHz",
+                        "OfdmRate6Mbps",
+                        "OfdmRate9Mbps",
+                        "OfdmRate12Mbps",
+                        "OfdmRate18Mbps",
+                        "OfdmRate24Mbps",
+                        "OfdmRate36Mbps",
+                        "OfdmRate48Mbps",
+                        "OfdmRate54Mbps"
+                    };
+    swmode[1] = swifi("802.11b (Wi-Fi b)");
+    swmode[1].mode = {
+                        "DsssRate1Mbps",
+                        "DsssRate2Mbps",
+                        "DsssRate5_5Mbps",
+                        "DsssRate11Mbps"
+                    };
+    swmode[2] = swifi("802.11g (Wi-Fi g)");
+    swmode[2].mode = {
+                        "ErpOfdmRate6Mbps",
+                        "ErpOfdmRate9Mbps",
+                        "ErpOfdmRate12Mbps",
+                        "ErpOfdmRate18Mbps",
+                        "ErpOfdmRate24Mbps",
+                        "ErpOfdmRate36Mbps",
+                        "ErpOfdmRate48Mbps",
+                        "ErpOfdmRate54Mbps"
+                    };
+    swmode[3] = swifi("802.11n (Wi-Fi n)");
+    swmode[3].mode = {
+                        "HtMcs0",
+                        "HtMcs1",
+                        "HtMcs2",
+                        "HtMcs3",
+                        "HtMcs4",
+                        "HtMcs5",
+                        "HtMcs6",
+                        "HtMcs7",
+                        "HtMcs8",
+                        "HtMcs9",
+                        "HtMcs10",
+                        "HtMcs11",
+                        "HtMcs12",
+                        "HtMcs13",
+                        "HtMcs14",
+                        "HtMcs15",
+                        "HtMcs16",
+                        "HtMcs17",
+                        "HtMcs18",
+                        "HtMcs19",
+                        "HtMcs20",
+                        "HtMcs21",
+                        "HtMcs22",
+                        "HtMcs23",
+                        "HtMcs24",
+                        "HtMcs25",
+                        "HtMcs26",
+                        "HtMcs27",
+                        "HtMcs28",
+                        "HtMcs29",
+                        "HtMcs30",
+                        "HtMcs31"
+                    };
+    swmode[4] = swifi("802.11ac (Wi-Fi 5)");
+    swmode[4].mode = {
+                        "VhtMcs0",
+                        "VhtMcs1",
+                        "VhtMcs2",
+                        "VhtMcs3",
+                        "VhtMcs4",
+                        "VhtMcs5",
+                        "VhtMcs6",
+                        "VhtMcs7",
+                        "VhtMcs8",
+                        "VhtMcs9"
+                    };
+    swmode[5] = swifi("802.11ax (Wi-Fi 6)");
+    swmode[5].mode = {
+                        "HeMcs0",
+                        "HeMcs1",
+                        "HeMcs2",
+                        "HeMcs3",
+                        "HeMcs4",
+                        "HeMcs5",
+                        "HeMcs6",
+                        "HeMcs7",
+                        "HeMcs8",
+                        "HeMcs9",
+                        "HeMcs10",
+                        "HeMcs11"
+                    };
+    swmode[6] = swifi("802.11be (Wi-Fi 7)");
+    swmode[6].mode = {
+                        "EhtMcs0",
+                        "EhtMcs1",
+                        "EhtMcs2",
+                        "EhtMcs3",
+                        "EhtMcs4",
+                        "EhtMcs5",
+                        "EhtMcs6",
+                        "EhtMcs7",
+                        "EhtMcs8",
+                        "EhtMcs9",
+                        "EhtMcs10",
+                        "EhtMcs11",
+                        "EhtMcs12",
+                        "EhtMcs13"
+                    };
+    cout<<setw(25)<<left<<"Wifi Standarad"<<"|"<<" Physical Mode\n";
+    cout<<"---------------------------------------------------------------------------------------------------------------\n";
+    for (int i=0;i<=6;i++)
+    {
+        int c1 = 24;
+        cout<<setw(c1)<<left<<swmode[i].name<<right<<i<<"| ";
+        for (long unsigned int j=0;j<swmode[i].mode.size();j++)
+        {
+            if (j%3==0 && j!= 0) cout<<"\n"<<setw(c1+3)<<right<<"| ";
+            cout<<swmode[i].mode[j]<<" - "<<j<<", ";
+        }
+        cout<<"\n---------------------------------------------------------------------------------------------------------\n";    
+    }
 }
 
 class manetNetwork {
@@ -95,13 +199,8 @@ public:
     }
 
     void createNetwork() {
-        double SentPackets = 0;
-        double ReceivedPackets = 0;
-        double AvgThroughput = 0;
-        double LostPackets = 0;
         string routing;
         double simulationTime = 500;
-        uint32_t processedFlows = 0;
         uint32_t numNodes = 0;
         Time::SetResolution(Time::NS);
 
@@ -161,47 +260,57 @@ public:
 
         // Create wireless network
         InforMode();
-        std::cout << "Enter the Wifi Standard (1,2, ..., 8): ";
+        std::cout << "Enter the Wifi Standard: ";
         int wS;
         std::cin >> wS;
         WifiHelper wifi;
         switch (wS)
         {
+            case 0:
+                wifi.SetStandard(WIFI_STANDARD_80211p);
+                cout<<"Wifi Standard is "<< swmode[0].name<<"\n";
+                break;
             case 1:
-                wifi.SetStandard(WIFI_STANDARD_80211ac);
+                wifi.SetStandard(WIFI_STANDARD_80211b);
+                cout<<"Wifi Standard is "<< swmode[1].name<<"\n";
                 break;
             case 2:
-                wifi.SetStandard(WIFI_STANDARD_80211ad);
+                wifi.SetStandard(WIFI_STANDARD_80211g);
+                cout<<"Wifi Standard is "<< swmode[2].name<<"\n";
                 break;
             case 3:
-                wifi.SetStandard(WIFI_STANDARD_80211ax);
+                wifi.SetStandard(WIFI_STANDARD_80211n);
+                cout<<"Wifi Standard is "<< swmode[3].name<<"\n";
                 break;
             case 4:
-                wifi.SetStandard(WIFI_STANDARD_80211b);
+                wifi.SetStandard(WIFI_STANDARD_80211ac);
+                cout<<"Wifi Standard is "<< swmode[4].name<<"\n";
                 break;
             case 5:
-                wifi.SetStandard(WIFI_STANDARD_80211be);
+                wifi.SetStandard(WIFI_STANDARD_80211ax);
+                cout<<"Wifi Standard is "<< swmode[5].name<<"\n";
                 break;
             case 6:
-                wifi.SetStandard(WIFI_STANDARD_80211g);
+                wifi.SetStandard(WIFI_STANDARD_80211be);
+                cout<<"Wifi Standard is "<< swmode[6].name<<"\n";
                 break;
-            case 7:
-                wifi.SetStandard(WIFI_STANDARD_80211n);
-                break;
-            case 8:
-                wifi.SetStandard(WIFI_STANDARD_80211p);
-                break;                 
             default:
                 cout<<"Wifi Standard isn't valid!"<<endl;
                 exit(1);
                 break;    
         }
-        std::string DataMode = "OfdmRate6Mbps";
-        std::string ControlMode = "OfdmRate6Mbps";
-        cout<<"Enter DataMode: ";
-        cin>>DataMode;
-        cout<<"Enter ControlMode: ";
-        cin>>ControlMode;
+        
+        string DataMode = "OfdmRate6Mbps";
+        string ControlMode = "OfdmRate6Mbps";
+        int choice = 0;
+        cout<<"Enter DataMode: "; 
+        cin>>choice;
+        DataMode = swmode[wS].mode[choice];
+        cout<<"DataMode is "<<DataMode<<"\n";
+        cout<<"Enter ControlMode: "; 
+        cin>>choice;
+        ControlMode = swmode[wS].mode[choice];
+        cout<<"ControlMode is "<<ControlMode<<"\n"; 
         wifi.SetRemoteStationManager("ns3::ConstantRateWifiManager",
                                      "DataMode", StringValue(DataMode),
                                      "ControlMode", StringValue(ControlMode));
@@ -243,8 +352,8 @@ public:
 
         // Attach the FIFO queue to the device with a simple buffer
         TrafficControlHelper tch;
-        // tch.SetRootQueueDisc("ns3::FifoQueueDisc");
         tch.Install(devices);
+        tch.SetRootQueueDisc("ns3::FifoQueueDisc");
 
         // Create applications
         uint16_t port = 9;
@@ -254,11 +363,12 @@ public:
         serverApp.Stop(Seconds(simulationTime));
 
         // Continuously sending packets from each node to a random node until simulation time is reached
-        uint64_t packetCount = 50;
-        double packetInterval = 0.001; // seconds
+        uint64_t packetCount = 10;
+        double packetInterval = 0.01; // seconds
         double delay = 0; // seconds
-        double delayInterval = 2.5; // seconds
-        for (uint64_t i = 0; i < nodes.GetN(); i++) {
+        // double delayInterval = 0.05; // seconds
+        for (uint64_t i = 0; i < nodes.GetN(); i++){ 
+        // for (uint64_t i = 0; i<1; i++){
             Ptr<Node> sourceNode = nodes.Get(i);
             uint64_t destIndex = rand() % nodes.GetN();
             // Ensure that the node does not send a packet to itself
@@ -274,9 +384,9 @@ public:
             client.SetAttribute("PacketSize", UintegerValue(32));
             ApplicationContainer clientApp = client.Install(sourceNode);
             clientApp.Start(Seconds(2.0 + delay)); // Start sending packets with a delay
-            delay += delayInterval;
-            clientApp.Stop(Seconds(2.0 + delay)); // Stop sending packets after the delay
-            delay += delayInterval;
+            // delay += delayInterval;
+            clientApp.Stop(Seconds(2.0 + 8.0)); // Stop sending packets after the delay
+            // delay += delayInterval;
         }
 
         // Install FlowMonitor onto the nodes
@@ -284,11 +394,11 @@ public:
         Ptr<FlowMonitor> monitor;
         monitor = flow.InstallAll();
 
-        Animation
+        // Animation
         AnimationInterface anim("manet.xml");
         anim.SetMaxPktsPerTraceFile(50000);
         anim.EnablePacketMetadata();
-        anim.EnableIpv4RouteTracking("manet_routing.xml", Seconds(0), Seconds(20), Seconds(1));
+        anim.EnableIpv4RouteTracking("manet_routing.xml", Seconds(0), Seconds(simulationTime), Seconds(1));
         anim.EnableWifiMacCounters(Seconds(0), Seconds(20));
         anim.EnableWifiPhyCounters(Seconds(0), Seconds(20));
 
@@ -298,6 +408,11 @@ public:
         Simulator::Run();
         Simulator::Destroy();
 
+        uint32_t processedFlows = 0;
+        double SentPackets = 0;
+        double ReceivedPackets = 0;
+        double AvgThroughput = 0;
+        double LostPackets = 0;
         Ptr<Ipv4FlowClassifier> classifier = DynamicCast<Ipv4FlowClassifier>(flow.GetClassifier());
         std::map<FlowId, FlowMonitor::FlowStats> stats = monitor->GetFlowStats();
         for (std::map<FlowId, FlowMonitor::FlowStats>::const_iterator iter = stats.begin(); iter != stats.end(); ++iter) {
@@ -325,7 +440,7 @@ public:
         NS_LOG_UNCOND("Total Lost Packets =" << LostPackets);
         NS_LOG_UNCOND("Packet delivery rate = " << ((ReceivedPackets * 100) / SentPackets) << "%");
         NS_LOG_UNCOND("Average Throughput =" << AvgThroughput << " Kbps");
-        monitor->SerializeToXmlFile("manet_flow-monitor.xml", true, true);
+        monitor->SerializeToXmlFile("manet_flow-monitor.xml", false, false);
     }
 };
 

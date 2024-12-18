@@ -129,8 +129,8 @@ public:
 
         // Attach the FIFO queue to the device with a simple buffer
         TrafficControlHelper tch;
-        // tch.SetRootQueueDisc("ns3::FifoQueueDisc");
         tch.Install(devices);
+        tch.SetRootQueueDisc("ns3::FifoQueueDisc");
 
         // Create applications
         uint16_t port = 9;
@@ -171,10 +171,10 @@ public:
         monitor = flow.InstallAll();
 
         // Animation
-        AnimationInterface anim("manet.xml");
+        AnimationInterface anim("original_manet.xml");
         anim.SetMaxPktsPerTraceFile(maxTrace);
         anim.EnablePacketMetadata();
-        anim.EnableIpv4RouteTracking("manet_routing.xml", Seconds(0), Seconds(20), Seconds(1));
+        anim.EnableIpv4RouteTracking("original_manet_routing.xml", Seconds(0), Seconds(simulationTime), Seconds(1));
         anim.EnableWifiMacCounters(Seconds(0), Seconds(20));
         anim.EnableWifiPhyCounters(Seconds(0), Seconds(20));
 
@@ -211,7 +211,7 @@ public:
         NS_LOG_UNCOND("Total Lost Packets =" << LostPackets);
         NS_LOG_UNCOND("Packet delivery rate = " << ((ReceivedPackets * 100) / SentPackets) << "%");
         NS_LOG_UNCOND("Average Throughput =" << AvgThroughput << " Kbps");
-        monitor->SerializeToXmlFile("manet_flow-monitor.xml", true, true);
+        monitor->SerializeToXmlFile("original_manet_flow-monitor.xml", false, false);
     }
 };
 
